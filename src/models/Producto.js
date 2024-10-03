@@ -10,7 +10,7 @@ Producto.init({
   pathImg: DataTypes.STRING
 }, {
   sequelize,
-  modelName: 'persona'
+  modelName: 'producto'
 });
 
 module.exports = Producto;
