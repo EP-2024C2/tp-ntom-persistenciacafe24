@@ -1,10 +1,11 @@
 const express = require('express');
 const routes = require('./routes/index');
 const sequelize = require('./config/database');
-
 const app = express();
 
+// Middlewares
 app.use(express.json());
+
 app.use(routes);
 
 sequelize.sync()
