@@ -1,14 +1,18 @@
 const { Producto, Fabricante } = require('../models/index');
 
-const productoController = {};
+const queryOptions = {
+  attributes: {
+    exclude: ['createdAt', 'updatedAt'],
+  },
+};
 
 // Obtener todos los productos
 const getAllProductos = async (req, res) => {
   try {
-    const productos = await Producto.findAll();
+    const productos = await Producto.findAll(queryOptions);
     res.status(200).json(productos);
   } catch (error) {
-    res.status(404).json({ message: 'No se encontró la página solicitada.' });
+    res.status(404).json({ message: 'No se encontró la página solicitada.', error });
   }
 };
 
@@ -16,10 +20,10 @@ const getAllProductos = async (req, res) => {
 const getProducto = async (req, res) => {
   const { id } = req.params;
   try {
-    const producto = await Producto.findByPk(id);
+    const producto = await Producto.findByPk(id, queryOptions);
     res.status(200).json(producto);
   } catch (error) {
-    res.status(404).json({ message: 'No se encontró el producto solicitado.' });
+    res.status(404).json({ message: 'No se encontró el producto solicitado.', error });
   }
 };
 
@@ -27,15 +31,15 @@ const getProducto = async (req, res) => {
 const createProducto = async (req, res) => {
   const { nombre, descripcion, precio, pathImg } = req.body;
   try {
-    const newProducto = await Producto.create({
+    const producto = await Producto.create({
       nombre,
       descripcion,
       precio,
       pathImg,
     });
-    res.status(201).json(newProducto);
+    res.status(201).json(producto);
   } catch (error) {
-    res.status(400).json({ message: 'Error en la creación del producto.' });
+    res.status(400).json({ message: 'Error en la creación del producto.', error });
   }
 };
 
@@ -52,7 +56,7 @@ const updateProducto = async (req, res) => {
     await producto.save();
     res.status(200).json(producto);
   } catch (error) {
-    res.status(404).json({ message: 'No se encontró el producto solicitado.' });
+    res.status(404).json({ message: 'No se encontró el producto solicitado.', error });
   }
 };
 
@@ -65,9 +69,9 @@ const deleteProducto = async (req, res) => {
         id,
       },
     });
-    res.status(200).json(productoEliminado); // falta error 500, ¿dónde utilizarlo?
+    res.status(200).json({ message: 'Producto eliminado con éxito.' }); // falta error 500, ¿dónde utilizarlo?
   } catch (error) {
-    res.status(404).json({ message: 'No se encontró el producto solicitado.' });
+    res.status(404).json({ message: 'No se encontró el producto solicitado.', error });
   }
 };
 
@@ -85,7 +89,7 @@ const asociarFabricantes = async (req, res) => {
     await producto.addFabricantes(fabrEncontrados);
     res.status(201).json(fabrEncontrados);
   } catch (error) {
-    res.status(404).json({ message: 'Falló la asociación de los Fabricantes.' });
+    res.status(404).json({ message: 'No se encontró el producto solicitado.', error });
   }
 };
 
@@ -93,25 +97,25 @@ const asociarFabricantes = async (req, res) => {
 const getFabricantesDelProducto = async (req, res) => {
   const { id: idProducto } = req.params;
   try {
-    const producto = await Producto.findByPk(idProducto);
-    const productoData = producto.dataValues;
-    const fabricantes = await producto.getFabricantes({ joinTableAttributes: [] });
+    const producto = await Producto.findByPk(idProducto, queryOptions);
+    const dataProducto = producto.dataValues;
+    const fabricantes = await producto.getFabricantes({ joinTableAttributes: [], ...queryOptions});
     const respuesta = {
-      ...productoData,
+      ...dataProducto,
       fabricantes,
     };
     res.status(200).json(respuesta);
   } catch (error) {
-    res.status(404).json({ message: 'Falló la obtención del recurso.' });
+    res.status(404).json({ message: 'No se encontró el producto solicitado.', error });
   }
 };
 
-productoController.getAllProductos = getAllProductos;
-productoController.getProducto = getProducto;
-productoController.createProducto = createProducto;
-productoController.updateProducto = updateProducto;
-productoController.deleteProducto = deleteProducto;
-productoController.asociarFabricantes = asociarFabricantes;
-productoController.getFabricantesDelProducto = getFabricantesDelProducto;
-
-module.exports = productoController;
+module.exports = {
+  getAllProductos,
+  getProducto,
+  createProducto,
+  updateProducto,
+  deleteProducto,
+  asociarFabricantes,
+  getFabricantesDelProducto,
+};
