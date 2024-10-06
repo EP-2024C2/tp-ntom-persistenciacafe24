@@ -1,5 +1,13 @@
 const { Router } = require('express');
-const { getAllProductos, getProducto, createProducto, updateProducto, deleteProducto, asociarFabricantes, getFabricantesDelProducto } = require('../controllers/producto.controller');
+const {
+  getAllProductos,
+  getProducto,
+  createProducto,
+  updateProducto,
+  deleteProducto,
+  asociarFabricantes,
+  getFabricantesDelProducto,
+} = require('../controllers/producto.controller');
 
 const routes = Router();
 

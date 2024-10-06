@@ -1,23 +1,21 @@
 const { Fabricante } = require('../models/index');
 
-const fabricanteController = {};
-
 // Crear un fabricante
 const createFabricante = async (req, res) => {
   const { nombre, direccion, numeroContacto, pathImgPerfil } = req.body;
   try {
-    const newFabricante = await Fabricante.create({
+    const fabricante = await Fabricante.create({
       nombre,
       direccion,
       numeroContacto,
-      pathImgPerfil
+      pathImgPerfil,
     });
-    res.status(201).json(newFabricante);
+    res.status(201).json(fabricante);
   } catch (error) {
-    res.status(400).json({ message: 'Error en la creación del fabricante.' });
+    res.status(400).json({ message: 'Error en la creación del fabricante.', error });
   }
 };
 
-fabricanteController.createFabricante = createFabricante;
-
-module.exports = fabricanteController;
+module.exports = {
+  createFabricante
+};
