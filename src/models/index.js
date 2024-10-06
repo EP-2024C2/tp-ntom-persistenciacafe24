@@ -2,10 +2,10 @@ const Producto = require('./Producto');
 const Fabricante = require('./Fabricante');
 const Componente = require('./Componente');
 
-Producto.hasMany(Fabricante);
-Fabricante.belongsToMany(Producto, { through: 'Producto_Fabricante' });
+Producto.belongsToMany(Fabricante, { through: 'ProductoFabricante' });
+Fabricante.belongsToMany(Producto, { through: 'ProductoFabricante' });
 
-Producto.hasMany(Componente);
-Componente.belongsToMany(Producto, { through: 'Producto_Componente' });
+Producto.belongsToMany(Componente, { through: 'ProductoComponente' });
+Componente.belongsToMany(Producto, { through: 'ProductoComponente' });
 
 module.exports = { Producto, Fabricante, Componente };
