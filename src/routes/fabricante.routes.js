@@ -1,9 +1,21 @@
-const { Router } = require('express');
-const { createFabricante } = require('../controllers/fabricante.controller');
+const { Router } = require('express')
+const fabricanteController = require('../controllers/fabricante.controller')
+
 
 const routes = Router();
 
-routes.get('/', /* controlador */);
-routes.post('/', createFabricante);
+routes.get('/', fabricanteController.getAllFabricantes)
 
-module.exports = routes;
+routes.get('/:id',fabricanteController.getFabricanteById)
+
+routes.post('/', fabricanteController.createFabricante)
+
+routes.delete('/:id',fabricanteController.deleteById)
+
+routes.put('/:id',fabricanteController.updateFabricante)
+
+routes.get('/:id/productos',fabricanteController.getProductosDelFabricante)
+
+routes.post('/:id/productos', fabricanteController.asociarProductos)
+
+module.exports = routes
