@@ -8,12 +8,12 @@ app.use(express.json());
 
 app.use(routes);
 
-sequelize.sync()
-  .then(() => console.log('Base de datos sincronizada.'))
-  .catch(error => console.log('Error al sincronizar la base de datos.', error));
+//sequelize.sync()
+  //.then(() => console.log('Base de datos sincronizada.'))
+ // .catch(error => console.log('Error al sincronizar la base de datos.', error));
 
 const PORT = process.env.PORT || 3500;
 
-app.listen(PORT, () => {
+app.listen(PORT, async() => {
   console.log(`Servidor corriendo en el puerto ${PORT}...`);
 });
