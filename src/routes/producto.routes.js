@@ -7,6 +7,8 @@ const {
   deleteProducto,
   asociarFabricantes,
   getFabricantesDelProducto,
+  asociarComponentes,
+  getComponentesDelProducto
 } = require('../controllers/producto.controller');
 
 const routes = Router();
@@ -18,5 +20,7 @@ routes.put('/:id', updateProducto);
 routes.delete('/:id', deleteProducto);
 routes.post('/:id/fabricantes', asociarFabricantes);
 routes.get('/:id/fabricantes', getFabricantesDelProducto);
+routes.post('/:id/componentes', asociarComponentes);
+routes.get('/:id/componentes', getComponentesDelProducto);
 
 module.exports = routes;

@@ -120,3 +120,4 @@ fabricanteController.updateFabricante = updateFabricante
 fabricanteController.getProductosDelFabricante = getProductosDelFabricante;
 fabricanteController.asociarProductos = asociarProductos;
 
+module.exports = fabricanteController;
