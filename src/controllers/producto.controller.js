@@ -69,7 +69,7 @@ const deleteProducto = async (req, res) => {
         id,
       },
     });
-    res.status(200).json({ message: 'Producto eliminado con éxito.' }); // falta error 500, ¿dónde utilizarlo?
+    res.status(200).json({ message: 'Producto eliminado con éxito.', productoEliminado }); // falta error 500, ¿dónde utilizarlo?
   } catch (error) {
     res.status(404).json({ message: 'No se encontró el producto solicitado.', error });
   }
@@ -99,7 +99,7 @@ const getFabricantesDelProducto = async (req, res) => {
   try {
     const producto = await Producto.findByPk(idProducto, queryOptions);
     const dataProducto = producto.dataValues;
-    const fabricantes = await producto.getFabricantes({ joinTableAttributes: [], ...queryOptions});
+    const fabricantes = await producto.getFabricantes({ joinTableAttributes: [], ...queryOptions });
     const respuesta = {
       ...dataProducto,
       fabricantes,
@@ -134,7 +134,7 @@ const getComponentesDelProducto = async (req, res) => {
   try {
     const producto = await Producto.findByPk(idProducto, queryOptions);
     const dataProducto = producto.dataValues;
-    const componentes = await producto.getComponentes({ joinTableAttributes: [], ...queryOptions});
+    const componentes = await producto.getComponentes({ joinTableAttributes: [], ...queryOptions });
     const respuesta = {
       ...dataProducto,
       componentes,
@@ -154,5 +154,5 @@ module.exports = {
   asociarFabricantes,
   getFabricantesDelProducto,
   asociarComponentes,
-  getComponentesDelProducto
+  getComponentesDelProducto,
 };
