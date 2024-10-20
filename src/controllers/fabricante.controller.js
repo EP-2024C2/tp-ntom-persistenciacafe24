@@ -80,7 +80,6 @@ const deleteById = async (req, res) => {
 //Obtener todos los productos de un fabricante
 const getProductosDelFabricante = async (req, res) => {
   const { id: idFabricante } = req.params;
-  const productosFabricados = [];
   try {
     const fabricante = await Fabricante.findByPk(idFabricante, queryOptions);
     const dataFabricante = fabricante.dataValues;

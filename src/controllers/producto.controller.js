@@ -69,7 +69,7 @@ const deleteProducto = async (req, res) => {
         id,
       },
     });
-    res.status(200).json({ message: 'Producto eliminado con éxito.', productoEliminado }); // falta error 500, ¿dónde utilizarlo?
+    res.status(200).json({ message: 'Producto eliminado con éxito.' });
   } catch (error) {
     res.status(404).json({ message: 'No se encontró el producto solicitado.', error });
   }
