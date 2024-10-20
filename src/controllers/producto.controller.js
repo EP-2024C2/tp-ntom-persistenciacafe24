@@ -1,4 +1,4 @@
-const { Producto, Fabricante } = require('../models/index');
+const { Producto, Fabricante, Componente } = require('../models/index');
 
 const queryOptions = {
   attributes: {
@@ -110,6 +110,41 @@ const getFabricantesDelProducto = async (req, res) => {
   }
 };
 
+// Crear la asociación de un producto con 1 o N componentes
+const asociarComponentes = async (req, res) => {
+  const { componentes } = req.body; // componentes es un arreglo de nombres de los componentes
+  const { id: idProducto } = req.params;
+  const componentesEncontrados = [];
+  try {
+    const producto = await Producto.findByPk(idProducto);
+    for (i = 0; i < componentes.length; i++) {
+      const unComponente = await Componente.findOne({ where: { nombre: componentes[i] } });
+      componentesEncontrados.push(unComponente);
+    }
+    await producto.addComponentes(componentesEncontrados);
+    res.status(201).json(componentesEncontrados);
+  } catch (error) {
+    res.status(404).json({ message: 'No se encontró el producto solicitado.', error });
+  }
+};
+
+// Obtener todos los fabricantes de un producto
+const getComponentesDelProducto = async (req, res) => {
+  const { id: idProducto } = req.params;
+  try {
+    const producto = await Producto.findByPk(idProducto, queryOptions);
+    const dataProducto = producto.dataValues;
+    const componentes = await producto.getComponentes({ joinTableAttributes: [], ...queryOptions});
+    const respuesta = {
+      ...dataProducto,
+      componentes,
+    };
+    res.status(200).json(respuesta);
+  } catch (error) {
+    res.status(404).json({ message: 'No se encontró el producto solicitado.', error });
+  }
+};
+
 module.exports = {
   getAllProductos,
   getProducto,
@@ -118,4 +153,6 @@ module.exports = {
   deleteProducto,
   asociarFabricantes,
   getFabricantesDelProducto,
+  asociarComponentes,
+  getComponentesDelProducto
 };
