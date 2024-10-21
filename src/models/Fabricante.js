@@ -4,10 +4,22 @@ const sequelize = require('../config/database');
 class Fabricante extends Model {}
 
 Fabricante.init({
-  nombre: DataTypes.STRING,
-  direccion: DataTypes.STRING,
-  numeroContacto: DataTypes.STRING,
-  pathImgPerfil: DataTypes.STRING
+  nombre: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  direccion: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  numeroContacto: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  pathImgPerfil: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
 }, {
   sequelize,
   modelName: 'fabricante'
