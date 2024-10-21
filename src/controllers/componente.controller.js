@@ -65,7 +65,7 @@ const deleteComponente = async (req, res) => {
         id,
       },
     });
-    res.status(200).json({ message: 'Componente eliminado con éxito.' }); // falta error 500, ¿dónde utilizarlo?
+    res.status(200).json({ message: 'Componente eliminado con éxito.' });
   } catch (error) {
     res.status(404).json({ message: 'No se encontró el componente solicitado.', error });
   }
@@ -75,24 +75,25 @@ const deleteComponente = async (req, res) => {
 const getProductosDelComponente = async (req, res) => {
   const { id: idComponente } = req.params;
   try {
-    const componente = await Componente.findByPk(idComponente, queryOptions);
-    const dataComponente = componente.dataValues;
-    const productos = await componente.getProductos({
+    const componente = await Componente.findByPk(idComponente, {
       joinTableAttributes: [],
       ...queryOptions,
       include: [
         {
-          model: Fabricante,
+          model: Producto,
           ...queryOptions,
           through: { attributes: [] },
+          include: [
+            {
+              model: Fabricante,
+              ...queryOptions,
+              through: { attributes: [] },
+            },
+          ],
         },
       ],
     });
-    const respuesta = {
-      ...dataComponente,
-      productos,
-    };
-    res.status(200).json(respuesta);
+    res.status(200).json(componente);
   } catch (error) {
     res.status(404).json({ message: 'No se encontró el componente solicitado.', error });
   }
