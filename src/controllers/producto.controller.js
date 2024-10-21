@@ -97,14 +97,15 @@ const asociarFabricantes = async (req, res) => {
 const getFabricantesDelProducto = async (req, res) => {
   const { id: idProducto } = req.params;
   try {
-    const producto = await Producto.findByPk(idProducto, queryOptions);
-    const dataProducto = producto.dataValues;
-    const fabricantes = await producto.getFabricantes({ joinTableAttributes: [], ...queryOptions });
-    const respuesta = {
-      ...dataProducto,
-      fabricantes,
-    };
-    res.status(200).json(respuesta);
+    const producto = await Producto.findByPk(idProducto, {
+      ...queryOptions,
+      include: [{
+        model: Fabricante,
+        through: { attributes: [] },
+        ...queryOptions
+      }],
+    });
+    res.status(200).json(producto);
   } catch (error) {
     res.status(404).json({ message: 'No se encontró el producto solicitado.', error });
   }
@@ -132,14 +133,15 @@ const asociarComponentes = async (req, res) => {
 const getComponentesDelProducto = async (req, res) => {
   const { id: idProducto } = req.params;
   try {
-    const producto = await Producto.findByPk(idProducto, queryOptions);
-    const dataProducto = producto.dataValues;
-    const componentes = await producto.getComponentes({ joinTableAttributes: [], ...queryOptions });
-    const respuesta = {
-      ...dataProducto,
-      componentes,
-    };
-    res.status(200).json(respuesta);
+    const producto = await Producto.findByPk(idProducto, {
+      ...queryOptions,
+      include: [{
+        model: Componente,
+        through: { attributes: [] },
+        ...queryOptions
+      }],
+    });
+    res.status(200).json(producto);
   } catch (error) {
     res.status(404).json({ message: 'No se encontró el producto solicitado.', error });
   }

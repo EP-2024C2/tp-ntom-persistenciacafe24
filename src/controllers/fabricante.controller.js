@@ -77,28 +77,29 @@ const deleteById = async (req, res) => {
   }
 };
 
-//Obtener todos los productos de un fabricante
+// Obtener todos los productos de un fabricante
 const getProductosDelFabricante = async (req, res) => {
   const { id: idFabricante } = req.params;
   try {
-    const fabricante = await Fabricante.findByPk(idFabricante, queryOptions);
-    const dataFabricante = fabricante.dataValues;
-    const productos = await fabricante.getProductos({
+    const fabricante = await Fabricante.findByPk(idFabricante, {
       joinTableAttributes: [],
       ...queryOptions,
       include: [
         {
-          model: Componente,
+          model: Producto,
           ...queryOptions,
           through: { attributes: [] },
+          include: [
+            {
+              model: Componente,
+              ...queryOptions,
+              through: { attributes: [] },
+            },
+          ],
         },
       ],
     });
-    const respuesta = {
-      ...dataFabricante,
-      productos,
-    };
-    res.status(200).json(respuesta);
+    res.status(200).json(fabricante);
   } catch (error) {
     res.status(404).json({ message: 'Falló la obtención del recurso.', error });
   }
