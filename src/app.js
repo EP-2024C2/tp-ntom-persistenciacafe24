@@ -1,6 +1,7 @@
 const express = require('express');
 const routes = require('./routes/index');
 const sequelize = require('./config/database');
+require('dotenv').config();
 const initialDatosCreados = require('./seeders/initialSeeder');
 const app = express();
 
@@ -26,7 +27,7 @@ startDataBase();
   .then(() => console.log('Base de datos sincronizada.'))
   .catch(error => console.log('Error al sincronizar la base de datos.', error)); */
 
-const PORT = process.env.PORT || 3500;
+const PORT = process.env.DB_PORT || 3500;
 
 app.listen(PORT, async () => {
   console.log(`Servidor corriendo en el puerto ${PORT}...`);

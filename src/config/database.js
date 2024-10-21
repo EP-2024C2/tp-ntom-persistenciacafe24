@@ -8,7 +8,7 @@ const { Sequelize } = require('sequelize');
 }); */
 
 const sequelize = new Sequelize({
-  dialect: 'sqlite',
+  dialect: process.env.DB_DIALECT || 'sqlite',
   storage: './src/data/database.sqlite',
 });
 
