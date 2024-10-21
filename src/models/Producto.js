@@ -4,10 +4,22 @@ const sequelize = require('../config/database');
 class Producto extends Model {}
 
 Producto.init({
-  nombre: DataTypes.STRING,
-  descripcion: DataTypes.STRING,
-  precio: DataTypes.FLOAT,
-  pathImg: DataTypes.STRING
+  nombre: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  descripcion: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  precio: {
+    type: DataTypes.FLOAT,
+    allowNull: false
+  },
+  pathImg: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
 }, {
   sequelize,
   modelName: 'producto'
