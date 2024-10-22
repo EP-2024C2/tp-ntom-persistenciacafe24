@@ -57,7 +57,16 @@ Sistema interno de gestión de productos para una empresa de manufactura que fab
    ```
 
 
-Diagrama Entidad-Relación
+## Diagrama Entidad-Relación
+
+![der](./DER.png)
 
 
+## Integrantes
+- Sebastian Castro
+- Carlos Javier Villafañe
+- Fernando Muñoz
+- Alan Ezequiel Amaya
+- Walter Aurelio Gareca
+- Lautaro Uriona
 
