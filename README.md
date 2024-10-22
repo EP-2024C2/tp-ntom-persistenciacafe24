@@ -41,8 +41,6 @@ Sistema interno de gestión de productos para una empresa de manufactura que fab
 1. Clonar el repositorio:
    ```bash
    git clone https://github.com/EP-2024C2/tp-ntom-persistenciacafe24.git
-   cd tp-ntom-persistenciacafe24
-
 2. Moverse a la carpeta del proyecto:
    ```
     cd tp-ntom-persistenciacafe24
